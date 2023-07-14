@@ -13,18 +13,25 @@
 // Створюємо функцію конструктор Vehicle.
 function Vehicle(brand, model, year, mileage) {
 	//  Записуєм в this.brand значення аргументу brand, в this.model значення аргументу model і так далі зі всіми аргументами
-	this.brand = barnd,
+	this.brand = brand,
 		this.model = model,
 		this.year = year,
 		this.mileage = mileage
 }
 
 // Рядковому представленю Vehicle призначаємо функцію яка повертає рядок: <brand> <model> <year>
-console.log(Vehicle.prototype.toString); // [Function: toString]
+// Використовуємо метод toString для виведення рядка в консоль
+Vehicle.prototype.toString = function () {
+	return `${this.brand} ${this.model} ${this.year}`;
+};
 
 // valueOf - це метод, який використовується JavaScript для конвертації об'єкта в примітивне значення.
 // Ми перевизначаємо його тут, щоб він повертав this.mileage.
-console.log(Vehicle.prototype.valueOf); // [Function: valueOf]
+// Використовуємо метод valueOf для виведення значення в консоль
+Vehicle.prototype.valueOf = function () {
+	return this.mileage;
+};
+
 
 /*
  * Функція конструктор: Car
@@ -52,7 +59,9 @@ function Car(brand, model, year, mileage, fuelType, speed) {
 // Ми можемо перевизначити методи з Vehicle в Car.
 // Рядковому представленю прототипу Car призначаємо функцію яка повертає рядок: <brand> <model> <year> - <fuelType>.
 // Використовуємо метод toString для виведення рядка в консоль
-console.log(Car.prototype.toString); // [Function: toString]
+Car.prototype.toString = function () {
+	return `${this.brand} ${this.model} ${this.year} - ${this.fuelType}`;
+};
 
 
 // Cтворюємо метод accelerate для прискорення швидкості прототипу Car, збільшує this.speed на передане число та виводить рядок в консоль: Автомобіль <brand> <model> прискорився до швидкості <speed> км/год
@@ -138,7 +147,7 @@ function Truck(
 }
 
 // Додатковий метод specific для прототипу Trucks, примає число якщо воно більше towingCapacity виводить рядок в консоль: Навантаження занадто важке для буксирування, якщо ні то рядок Тягнення навантаження...
-Truck.prototype.specific = function (weight) {
+Truck.prototype.tow = function (weight) {
 	if (weight > this.towingCapacity) {
 		console.log('Навантаження занадто важке для буксирування');
 	} else {
@@ -148,6 +157,20 @@ Truck.prototype.specific = function (weight) {
 
 
 // Створюємо новий екземпляр об'єкта Truck
+const myTruck = new Truck(
+	'Toyota',
+	'Tundra',
+	2019,
+	20000,
+	'Red',
+	'V8',
+	10000,
+	'Gasoline',
+	'Automatic',
+	4,
+	5600
+);
+
 /*
  * Екземпляр об'єкту: myTruck
  * Властивості:
@@ -168,6 +191,7 @@ Truck.prototype.specific = function (weight) {
  */
 
 // Викликаємо метод tow з вагою меншою за towingCapacity
+
 myTruck.tow(5000); // Тягнення навантаження...
 
 // Викликаємо метод tow з вагою більшою за towingCapacity
@@ -217,7 +241,7 @@ ElectricCar.prototype.toString = function () {
 };
 
 // Створюємо новий екземпляр ElectricCar
-myTesla = new ElectricCar('Tesla', 'Model S', 2020, 10000, 100);
+const myTesla = new ElectricCar('Tesla', 'Model S', 2020, 10000, 100);
 
 /*
  * Екземпляр об'єкту: ElectricCar
